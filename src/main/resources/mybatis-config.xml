@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+<!--给mybatist一点面子 留两个  一个 别名  一个设置-->
+    <typeAliases>
+        <package name="com.mcd.pojo"/>
+    </typeAliases>
+    <!--一一般只写这两个-->
+    <!--<settings>-->
+        <!--<setting name="" value=""/>-->
+    <!--</settings>-->
+
+
+
+
+
+
+
+<!--数据源 spring有此处就不用写了
+     <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC"></transactionManager>
+            <dataSource type="POOLED">
+                <property name="driver" value="com.mysql.cj.jdbc.Driver"/>
+                <property name="url" value="jdbc:mysql://localhost:3306/ssm?serverTimezone=UTC"/>
+                <property name="username" value="root"/>
+                <property name="password" value="123456"/>
+            </dataSource>
+        </environment>
+    </environments>
+-->
+<!--因为spring那绑定了配置  所以可以省略-->
+    <!--<mappers>-->
+        <!--<mapper class="com.mcd.mapper.UserMapper"/>-->
+    <!--</mappers>-->
+
+
+
+</configuration>
