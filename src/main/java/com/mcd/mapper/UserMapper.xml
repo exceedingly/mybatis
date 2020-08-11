@@ -7,4 +7,12 @@
         select * from user;
     </select>
 
+    <insert id="addUser" parameterType="user">
+        insert into user(id,username,password)values (#{id},#{username},#{password});
+    </insert>
+
+    <delete id="deleteUse" parameterType="int">
+        delete from user where id= #{id};
+    </delete>
+
 </mapper>

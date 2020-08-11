@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd">
 
 
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
@@ -24,6 +26,37 @@
         <constructor-arg index="0" ref="sqlSessionFactory"/>
     </bean>
 
+
+<!--    配置声明式事物-->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+<!--    Aop事物织入  目的 执行增删改查 自动执行事物
+        1 确定好 哪一个 方法执行后 产生哪些效果
+        2 事物加上特性
+        3 切进去
+-->
+
+
+<!--    配置事务通知-->
+    <tx:advice id="txADVICE" transaction-manager="transactionManager">
+<!--        给哪些方法 配置事务-->
+        <tx:attributes>
+<!--            <tx:method name="add" propagation="REQUIRED"/>-->
+<!--            <tx:method name="delete" propagation="REQUIRED"/>-->
+<!--            <tx:method name="update" propagation="REQUIRED"/>-->
+<!--            <tx:method name="query" read-only="true"/>-->
+<!--            一般就写一个-->
+            <tx:method name="*" propagation="REQUIRED"/>
+        </tx:attributes>
+    </tx:advice>
+
+<!--切进事物中-->
+    <aop:config>
+        <aop:pointcut id="txPoint" expression="execution(* com.mcd.mapper.*.*(..))"/>
+        <aop:advisor advice-ref="txADVICE" pointcut-ref="txPoint"/>
+    </aop:config>
 </beans>
 
 
